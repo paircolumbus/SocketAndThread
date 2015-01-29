@@ -16,7 +16,7 @@ def single_client_server
   end
 end
 
-#single_threaded_server
+#single_client_server
 
 def multi_client_server
   server = TCPServer.open(PORT)
