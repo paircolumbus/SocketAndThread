@@ -3,10 +3,28 @@ require 'socket'
 hostname = 'localhost'
 port = 2000
 
-s = TCPSocket.open(hostname, port)
+start_time = Time.now
 
-while line = s.gets
-  puts line.chop
+$stdout.sync = true
+
+threads = []
+
+100.times do
+  threads << Thread.start() do
+    s = TCPSocket.open(hostname, port)
+
+    while line = s.gets
+      puts line.chop
+    end
+
+    s.close
+  end
 end
 
-s.close
+threads.each do |thr|
+  thr.join
+end
+
+end_time = Time.now
+
+puts end_time - start_time
